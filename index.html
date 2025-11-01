@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Logistics Platform Survey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .form-content {
+            padding: 40px 30px;
+        }
+
+        .section-title {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin: 30px -30px 25px -30px;
+            border-left: 5px solid #2ecc71;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .question-number {
+            color: #2ecc71;
+            margin-right: 8px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            background: #e9ecef;
+            border-color: #2ecc71;
+        }
+
+        .radio-option input, .checkbox-option input {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .text-input, .textarea-input, .select-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .text-input:focus, .textarea-input:focus, .select-input:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+        }
+
+        .textarea-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .rating-scale {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .rating-option {
+            flex: 1;
+            min-width: 60px;
+            padding: 12px;
+            text-align: center;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .rating-option:hover {
+            background: #e9ecef;
+            border-color: #2ecc71;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-option input:checked + label {
+            background: #2ecc71;
+            color: white;
+            border-color: #2ecc71;
+        }
+
+        .table-rating {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .table-rating th, .table-rating td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table-rating th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .table-rating td:first-child {
+            font-weight: 500;
+        }
+
+        .table-rating select {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            border: 2px solid #c3e6cb;
+        }
+
+        @media (max-width: 600px) {
+            .form-content {
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                margin-left: -20px;
+                margin-right: -20px;
+                font-size: 18px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .rating-scale {
+                flex-direction: column;
+            }
+
+            .rating-option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚜 Shared Logistics Platform Survey</h1>
+            <p>Buying Intention Survey for Small Farmers</p>
+            <p style="margin-top: 10px; font-size: 14px;">Estimated time: 8-10 minutes</p>
+        </div>
+
+        <div class="form-content">
+            <form id="surveyForm">
+                
+                <!-- SECTION A: Demographic Information -->
+                <div class="section-title">SECTION A: Demographic Information</div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q1:</span>
+                        What type of crops do you primarily grow? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="vegetables" required>
+                            Vegetables (tomatoes, cucumbers, peppers, etc.)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="fruits">
+                            Fruits (dates, citrus, etc.)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="herbs">
+                            Herbs and leafy greens
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="mixed">
+                            Mixed crops
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="other">
+                            Other
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q2:</span>
+                        How large is your farm? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value="<2" required>
+                            Less than 2 hectares
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value="2-5">
+                            2-5 hectares
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value="5-10">
+                            5-10 hectares
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value=">10">
+                            More than 10 hectares
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q3:</span>
+                        How many years have you been farming? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value="<5" required>
+                            Less than 5 years
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value="5-10">
+                            5-10 years
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value="10-20">
+                            10-20 years
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value=">20">
+                            More than 20 years
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SECTION B: Current Logistics Challenges -->
+                <div class="section-title">SECTION B: Current Logistics Challenges</div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q4:</span>
+                        How do you currently transport your produce to market? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q4" value="own" required>
+                            Own vehicle
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q4" value="rent">
+                            Rent a truck per delivery
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q4" value="middleman">
+                            Use a middleman/distributor
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q4" value="share">
+                            Share transportation with other farmers informally
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q4" value="other">
+                            Other
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q5:</span>
+                        On average, how much do you spend on transportation per month? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="<500" required>
+                            Less than AED 500
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="500-1000">
+                            AED 500-1,000
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="1000-2000">
+                            AED 1,000-2,000
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="2000-5000">
+                            AED 2,000-5,000
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value=">5000">
+                            More than AED 5,000
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q6:</span>
+                        What percentage of your produce typically spoils or loses quality due to logistics delays? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="<10" required>
+                            Less than 10%
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="10-20">
+                            10-20%
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="20-30">
+                            20-30%
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="30-40">
+                            30-40%
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value=">40">
+                            More than 40%
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q7:</span>
+                        Rate your biggest logistics challenges (1 = Not a problem, 5 = Major problem) <span class="required">*</span>
+                    </label>
+                    <table class="table-rating">
+                        <thead>
+                            <tr>
+                                <th>Challenge</th>
+                                <th style="width: 150px;">Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>High transportation costs</td>
+                                <td>
+                                    <select name="q7_transport" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lack of refrigerated transport</td>
+                                <td>
+                                    <select name="q7_refrigerated" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Difficulty finding reliable transport</td>
+                                <td>
+                                    <select name="q7_reliable" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Produce spoilage during transport</td>
+                                <td>
+                                    <select name="q7_spoilage" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Limited access to buyers</td>
+                                <td>
+                                    <select name="q7_buyers" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Unfair pricing from middlemen</td>
+                                <td>
+                                    <select name="q7_middlemen" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q8:</span>
+                        How often do you face difficulty getting your produce to market on time? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q8" value="never" required>
+                            Never
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q8" value="rarely">
+                            Rarely (once every few months)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q8" value="sometimes">
+                            Sometimes (monthly)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q8" value="often">
+                            Often (weekly)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q8" value="always">
+                            Always
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SECTION C: Platform Interest -->
+                <div class="section-title">SECTION C: Platform Interest and Buying Intention</div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q9:</span>
+                        Would you be interested in using a shared logistics platform that pools transportation costs with other farmers? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="definitely_yes" required>
+                            Definitely yes
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="probably_yes">
+                            Probably yes
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="not_sure">
+                            Not sure
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="probably_not">
+                            Probably not
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="definitely_not">
+                            Definitely not
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q10:</span>
+                        If this platform could reduce your transportation costs by 40-60%, how likely are you to use it? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q10" value="extremely" required>
+                            Extremely likely
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q10" value="very">
+                            Very likely
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q10" value="somewhat">
+                            Somewhat likely
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q10" value="not_very">
+                            Not very likely
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q10" value="not_at_all">
+                            Not at all likely
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q11:</span>
+                        Which pricing model would you prefer? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q11" value="commission" required>
+                            Pay commission per delivery (8-15% of sale value)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q11" value="subscription">
+                            Monthly subscription (AED 200-500)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q11" value="per_use">
+                            Pay per use (fixed fee per delivery)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q11" value="combination">
+                            Combination of subscription + lower commission
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q11" value="not_sure">
+                            Not sure
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q12:</span>
+                        What is the maximum monthly amount you'd be willing to pay for reliable logistics services? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q12" value="<200" required>
+                            Less than AED 200
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q12" value="200-500">
+                            AED 200-500
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q12" value="500-1000">
+                            AED 500-1,000
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q12" value="1000-2000">
+                            AED 1,000-2,000
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q12" value=">2000">
+                            More than AED 2,000
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SECTION D: Feature Preferences -->
+                <div class="section-title">SECTION D: Feature Preferences</div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q13:</span>
+                        Which features would be most valuable to you? (Rank 1-5, with 1 being most important) <span class="required">*</span>
+                    </label>
+                    <table class="table-rating">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="width: 150px;">Rank (1-5)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Refrigerated transportation</td>
+                                <td>
+                                    <select name="q13_refrigerated" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1 (Most important)</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5 (Least important)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Direct access to restaurants/hotels</td>
+                                <td>
+                                    <select name="q13_access" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1 (Most important)</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5 (Least important)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Quality certification for produce</td>
+                                <td>
+                                    <select name="q13_certification" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1 (Most important)</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5 (Least important)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Real-time tracking of deliveries</td>
+                                <td>
+                                    <select name="q13_tracking" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1 (Most important)</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5 (Least important)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Packaging and branding support</td>
+                                <td>
+                                    <select name="q13_packaging" required>
+                                        <option value="">Select</option>
+                                        <option value="1">1 (Most important)</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5 (Least important)</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q14:</span>
+                        How important is it that the platform provides market price information and demand forecasts? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q14" value="extremely" required>
+                            Extremely important
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q14" value="very">
+                            Very important
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q14" value="moderately">
+                            Moderately important
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q14" value="slightly">
+                            Slightly important
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q14" value="not">
+                            Not important
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q15:</span>
+                        Would you be interested in additional services like micro-loans or crop insurance through the platform? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q15" value="very_interested" required>
+                            Yes, very interested
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q15" value="somewhat">
+                            Yes, somewhat interested
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q15" value="maybe">
+                            Maybe
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q15" value="not_really">
+                            Not really interested
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q15" value="not_at_all">
+                            Not at all interested
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SECTION E: Concerns and Requirements -->
+                <div class="section-title">SECTION E: Concerns and Requirements</div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q16:</span>
+                        What are your main concerns about joining a shared logistics platform? (Select all that apply) <span class="required">*</span>
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="q16" value="quality_control">
+                            Trust in quality control standards
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="q16" value="reliability">
+                            Reliability of delivery schedules
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="q16" value="cost_allocation">
+                            Fair cost allocation among farmers
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="q16" value="technology">
+                            Technology complexity
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="q16" value="payment">
+                            Payment security
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="q16" value="independence">
+                            Loss of independence
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="q16" value="other">
+                            Other
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q17:</span>
+                        How comfortable are you using smartphone apps for business? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q17" value="very" required>
+                            Very comfortable
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q17" value="somewhat">
+                            Somewhat comfortable
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q17" value="neutral">
+                            Neutral
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q17" value="not_very">
+                            Not very comfortable
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q17" value="not_comfortable">
+                            Not comfortable at all
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q18:</span>
+                        If the platform launched in the next 3 months, when would you likely start using it? <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q18" value="immediately" required>
+                            Immediately (within first month)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q18" value="3months">
+                            Within 3 months
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q18" value="6months">
+                            Within 6 months
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q18" value="after_others">
+                            After seeing others use it successfully
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q18" value="not_planning">
+                            Not planning to use it
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SECTION F: Final Decision -->
+                <div class="section-title">SECTION F: Final Decision</div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q19:</span>
+                        Based on everything described about this shared logistics platform, what is your overall intention to use this service? <span class="required">*</span>
+                        <br><small style="color: #666; font-weight: normal;">Scale: 1 (Definitely will not use) to 10 (Definitely will use)</small>
+                    </label>
+                    <div class="rating-scale">
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="1" required>
+                            <span>1</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="2">
+                            <span>2</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="3">
+                            <span>3</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="4">
+                            <span>4</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="5">
+                            <span>5</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="6">
+                            <span>6</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="7">
+                            <span>7</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="8">
+                            <span>8</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="9">
+                            <span>9</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="q19" value="10">
+                            <span>10</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">
+                        <span class="question-number">Q20:</span>
+                        Any additional comments or suggestions for the platform?
+                    </label>
+                    <textarea class="textarea-input" name="q20" placeholder="Please share your thoughts, suggestions, or any concerns..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Survey</button>
+
+                <div class="success-message" id="successMessage">
+                    ✓ Thank you! Your response has been recorded successfully.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Log the data (in real implementation, send to server)
+            console.log('Survey Data:', data);
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            
+            // Hide form
+            this.style.display = 'none';
+            
+            // In a real implementation, you would send this data to a server:
+            // fetch('/api/submit-survey', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(data)
+            // });
+        });
+
+        // Add visual feedback for rating scale
+        document.querySelectorAll('.rating-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Remove checked class from siblings
+                this.parentElement.querySelectorAll('.rating-option').forEach(opt => {
+                    opt.style.background = '#f8f9fa';
+                    opt.style.color = '#333';
+                    opt.style.borderColor = '#e0e0e0';
+                });
+                
+                // Add checked style
+                this.style.background = '#2ecc71';
+                this.style.color = 'white';
+                this.style.borderColor = '#2ecc71';
+            });
+        });
+    </script>
+</body>
+</html>
